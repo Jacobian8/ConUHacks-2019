@@ -43,7 +43,7 @@ app.get('/getRecipe', function (req, res) {
     con.query(sql, function (err, result) {
         if (err) throw err;
         var topThree = result;
-        var selection = ''; 
+        var selection = '';
         console.log(topThree);
         for (var foodItem in topThree) {
             selection += topThree[foodItem].FOOD_ITEM + ',';
@@ -71,19 +71,30 @@ app.get('/getRecipe', function (req, res) {
 //Receicing all foods being recognized by the camera (python code)
 app.post('/addedFood', function (req, res) {
     console.log("Inserting food into database");
-
     console.log(req.body.foods);
     var food = req.body.foods;
     var elements = ['apple', 'orange', 'banana', 'bread'];
     for (var i = 0; i < req.body.foods.length; i++) {
         if (elements.includes(food[i])) {
-            var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE)"
-                + "VALUES ('" + food[i] + "', DATE_ADD(NOW(), INTERVAL (SELECT AVG_DAYS"
-                + " FROM ConUHacks2019.EXP_DATES"
-                + " WHERE FOOD_TYPE ='" + food[i] + "') DAY))";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
+            var currentFood = food[i];
+            var total = "select count(FOOD_ITEM) from ConUHacks2019.MY_FOOD where FOOD_ITEM = '" + food[i] + "'";
+
+            con.query(total, [currentFood], function (err, number) {
+                if (err) throw err; 
+                console.log(currentFood);
+                console.log(number[0]['count(FOOD_ITEM)']);
+
+                if (number[0]['count(FOOD_ITEM)'] < 1) {
+                    var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE)"
+                        + "VALUES ('" + currentFood + "', DATE_ADD(NOW(), INTERVAL (SELECT AVG_DAYS"
+                        + " FROM ConUHacks2019.EXP_DATES"
+                        + " WHERE FOOD_TYPE ='" + currentFood + "') DAY))";
+                    con.query(sql, function (err, result) {
+                        if (err) throw err;
+                    });
+                }
             });
+
         }
     }
 

@@ -85,16 +85,17 @@ app.post('/addedFood', function (req, res) {
                 console.log(number[0]['count(FOOD_ITEM)']);
 
                 if (number[0]['count(FOOD_ITEM)'] < 1) {
-                    var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE)"
+                    var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE, URL)"
                         + "VALUES ('" + currentFood + "', DATE_ADD(NOW(), INTERVAL (SELECT AVG_DAYS"
                         + " FROM ConUHacks2019.EXP_DATES"
-                        + " WHERE FOOD_TYPE ='" + currentFood + "') DAY))";
+                        + " WHERE FOOD_TYPE ='" + currentFood + "') DAY), (SELECT URL"
+                        + " FROM ConUHacks2019.EXP_DATES"
+                        + " WHERE FOOD_TYPE ='" + currentFood + "'))";
                     con.query(sql, function (err, result) {
                         if (err) throw err;
                     });
                 }
             });
-
         }
     }
 

@@ -39,10 +39,20 @@ app.get('/getFood', function (req, res) {
 
 //Returning Recipe containing foods with soonest expiration date
 app.get('/getRecipe', function (req, res) {
-    request('https://api.edamam.com/search?q=chicken&app_id='+apiID+'&app_key='+apiKEY, { json: true }, (err, response, body) => {
+    request('https://api.edamam.com/search?q=chicken&app_id=' + apiID + '&app_key=' + apiKEY, { json: true }, (err, response, body) => {
         if (err) { return console.log(err); }
-        res.send(response);
-      });
+        var recipes = '{recipes: [';
+        for (let index in response.body.hits) {
+            var recipe = response.body.hits[index].recipe;
+            recipes = recipes + ' { "label" : "' + recipe.label + '", "url" : "' + recipe.url + '", "image" : "' + recipe.image + '", "ingredientLines" : "' + recipe.ingredientLines + '" } '
+            if (index != response.body.hits.length - 1) {
+                recipes = recipes +  ',\n';
+            }
+        }
+        recipes = recipes + ']}';
+
+        res.send(recipes);
+    });
 })
 
 //Receicing all foods being recognized by the camera (python code)

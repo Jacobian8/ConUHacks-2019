@@ -22,13 +22,13 @@ class App extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://192.168.137.212:8000/getFood')
+    axios.get('http://192.168.137.169:8000/getFood')
     .then((res) => {
       this.state.foodItems = res.data;
       console.log(this.state.foodItems);
     })
 
-    axios.get('///////////ENTER RECIPE API HERE')
+    axios.get('http://192.168.137.169:8000/getRecipe')
     .then((res) => {
       this.state.recipeItems = res.data;
       console.log(this.state.recipeItems);
@@ -36,24 +36,33 @@ class App extends Component {
   }
   
   render() {
-    const recipeItems = this.state.recipeItems.map((key) => {
-      return(            
-        <RecipeItem recipe={this.state.recipeItems[key]}>
+    // const recipeItems = this.state.recipeItems.map((key) => {
+    //   if(this.state.recipeItems){
+    //     return(
+    //         <RecipeItem recipe={this.state.recipeItems[key]}>
+    //         </RecipeItem>       
+    //     );
+    //   }
+    //   else{
+    //     return(<div></div>);
+    //   }
+    // });
 
-        </RecipeItem>
-      );
-    });
-
-    const foodItems = this.state.foodItems.map((key) => {
-      return(            
-        <FoodItem food={this.state.foodItems[key]}>
-
-        </FoodItem>
-      );
-    });
+    // const foodItems = this.state.foodItems.map((key) => {
+    //   if(this.state.foodItems){
+    //     return(            
+    //       <FoodItem food={this.state.foodItems[key]}>
+  
+    //       </FoodItem>
+    //     );
+    //   }
+    //   else{
+    //     return(<div></div>);
+    //   }
+    // });
 
     return (<div>
-      <HeaderComponent>
+      {/* <HeaderComponent>
 
       </HeaderComponent>
       <Grid stackable columns={2}>
@@ -66,7 +75,7 @@ class App extends Component {
           {foodItems}
           </div>
       </Grid.Column>
-    </Grid>
+    </Grid> */}
       
     </div>);
   }

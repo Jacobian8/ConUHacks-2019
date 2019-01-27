@@ -30,8 +30,11 @@ class App extends Component {
 
     axios.get('http://192.168.137.169:8000/getRecipe')
     .then((res) => {
+      console.log(res);
+      console.log('//////////////////////////');
       this.state.recipeItems = res.data;
       console.log(this.state.recipeItems);
+      console.log('jello');
     })
   }
   

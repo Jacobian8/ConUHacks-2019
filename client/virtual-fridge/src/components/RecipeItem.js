@@ -6,6 +6,8 @@ export default class RecipeItem extends Component {
     super(props);
 
     this.state = this.props.recipe;
+    console.log('Recipe item props: '+this.props.recipe);
+    console.log(this.state);
   }
   
   componentDidMount(){
@@ -14,13 +16,12 @@ export default class RecipeItem extends Component {
   render() {
     return <div className="recipeContainer">
     <Card>
-    <Image src={ this.state.IMAGE_URL } className="recipeImage"/>
+    <Image src={ this.state.image } href={this.state.url} className="recipeImage"/>
 
     <Card.Content>
-        <Card.Header>{ this.state.RECIPE_TITLE }</Card.Header>
-        <div>{ this.state.DESCRIPTION }</div>
-        <div>{ this.state.COOKING_TIME }</div>
-
+        <Card.Header>{ this.state.label }</Card.Header>
+        <div>{ this.state.ingredientLines }</div>
+        <div><a href={this.state.url}>{this.state.url}</a></div>
         <span className="greytext"> x{this.state.QUANTITY}</span>
 
     </Card.Content>

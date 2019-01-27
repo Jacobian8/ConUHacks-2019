@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.header-toolbar .ui.huge.header {
+  background-color: #90CAF9;
+  height:8vh;
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+}
+
+.greytext{
+  color: #757575;
+}
+
+.ui.grid > *{
+  padding: 1rem;
+}
+
+.ui.grid{
+  padding-top: 1rem;
+}
+
+.fooditem{
+  width: 12em;
+  padding: 1rem;
+}
+
+
+.foodListDiv{
+  display: flex !important;
+  flex-wrap: wrap !important;/* I know !important is ugly, I would never actually do this*/
+  justify-content: center;
+}
+
+.recipeItem{
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+}
+
+.recipeContainer{
+  margin-top: 10px !important;
+  margin-bottom: 20px !important;
+}
+
+.recipeContainer .ui.card{
+  width: 85%;
+  margin: auto;
+}
+
+@media only screen and (min-width: 804px) {
+  .gridContainer{
+    overflow-y: scroll;
+    height: 92vh;
+  }
+}
+
+
+
+.ui.stackable.two.column.grid{
+  margin-top: 0;
+}

@@ -19,13 +19,10 @@ class App extends Component {
       recipeItems: [],
       isLoadedRecipe: false,
       isLoadedFood: false
-
     };
   }
 
   componentDidMount(){
-
-
     this.timer = setInterval(()=> this.getItems(), 15000);
   }
 
@@ -82,8 +79,6 @@ class App extends Component {
         
       </div>);
     }
-
-
   }
 }
 

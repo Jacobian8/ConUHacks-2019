@@ -22,7 +22,6 @@ export default class RecipeItem extends Component {
         <Card.Header>{ this.state.label }</Card.Header>
         <div>{ this.state.ingredientLines }</div>
         <div><a href={this.state.url}>{this.state.url}</a></div>
-
         <span className="greytext"> x{this.state.QUANTITY}</span>
 
     </Card.Content>

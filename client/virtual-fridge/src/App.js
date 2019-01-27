@@ -14,73 +14,76 @@ import RecipeItem from "./components/RecipeItem";
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      foodItems: null,
-      recipeItems: null
+      foodItems: [],
+      recipeItems: [],
+      isLoadedRecipe: false,
+      isLoadedFood: false
+
     };
   }
 
   componentDidMount(){
+
+
+    this.timer = setInterval(()=> this.getItems(), 15000);
+  }
+
+  getItems(){
     axios.get('http://192.168.137.169:8000/getFood')
     .then((res) => {
-      this.state.foodItems = res.data;
+      this.setState({foodItems: res.data, isLoadedFood: true});
       console.log(this.state.foodItems);
+      console.log('hello')
     })
 
     axios.get('http://192.168.137.169:8000/getRecipe')
     .then((res) => {
-      console.log(res);
-      console.log('//////////////////////////');
-      this.state.recipeItems = res.data;
+      this.setState({recipeItems: res.data.recipes, isLoadedRecipe: true});
       console.log(this.state.recipeItems);
-      console.log('jello');
+      console.log('hello2');
     })
   }
-  
+
+  componentWillUnmount() {
+    this.timer = null; // here...
+  }
+
   render() {
-    // const recipeItems = this.state.recipeItems.map((key) => {
-    //   if(this.state.recipeItems){
-    //     return(
-    //         <RecipeItem recipe={this.state.recipeItems[key]}>
-    //         </RecipeItem>       
-    //     );
-    //   }
-    //   else{
-    //     return(<div></div>);
-    //   }
-    // });
+    if(!(this.state.isLoadedRecipe&&this.state.isLoadedFood)){
+      return <div>Loading...</div>
+    }
+    else{
 
-    // const foodItems = this.state.foodItems.map((key) => {
-    //   if(this.state.foodItems){
-    //     return(            
-    //       <FoodItem food={this.state.foodItems[key]}>
-  
-    //       </FoodItem>
-    //     );
-    //   }
-    //   else{
-    //     return(<div></div>);
-    //   }
-    // });
-
-    return (<div>
-      {/* <HeaderComponent>
-
-      </HeaderComponent>
-      <Grid stackable columns={2}>
-
-      <Grid.Column width={9} className = "gridContainer">
-        {recipeItems}
-      </Grid.Column>
-      <Grid.Column width={7} className = "gridContainer">
-      <div className="foodListDiv">
-          {foodItems}
-          </div>
-      </Grid.Column>
-    </Grid> */}
+      return (
       
-    </div>);
+        <div>
+  
+        <HeaderComponent>
+  
+        </HeaderComponent>
+        <Grid stackable columns={2}>
+  
+        <Grid.Column width={9} className = "gridContainer">
+            {this.state.recipeItems.map(item => (
+              <RecipeItem recipe={item}></RecipeItem>
+            ))};
+           
+        </Grid.Column>
+        <Grid.Column width={7} className = "gridContainer">
+        <div className="foodListDiv">
+            {this.state.foodItems.map(item => (
+              <FoodItem food={item}></FoodItem>
+            ))}
+           
+        </div>
+        </Grid.Column>
+      </Grid>
+        
+      </div>);
+    }
+
+
   }
 }
 

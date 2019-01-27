@@ -39,21 +39,32 @@ app.get('/getFood', function (req, res) {
 
 //Returning Recipe containing foods with soonest expiration date
 app.get('/getRecipe', function (req, res) {
-    request('https://api.edamam.com/search?q=chicken&app_id=' + apiID + '&app_key=' + apiKEY, { json: true }, (err, response, body) => {
-        if (err) { return console.log(err); }
-        var recipes = {};
-        recipes['recipes'] = [];
-        for (let index in response.body.hits) {
-            var recipe = response.body.hits[index].recipe;
-            var data = {
-                label : recipe.label,
-                image : recipe.image, 
-                url : recipe.url, 
-                ingredientLines : recipe.ingredientLines
-            }
-            recipes['recipes'].push(data); 
+    var sql = "SELECT * FROM ConUHacks2019.MY_FOOD order by EXP_DATE DESC LIMIT 3";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        var topThree = result;
+        var selection = ''; 
+        console.log(topThree);
+        for (var foodItem in topThree) {
+            selection += topThree[foodItem].FOOD_ITEM + ',';
         }
-        res.json(recipes);
+        console.log(selection);
+        request('https://api.edamam.com/search?q=' + selection + '&app_id=' + apiID + '&app_key=' + apiKEY + '&from=0&to=5', { json: true }, (err, response, body) => {
+            if (err) { return console.log(err); }
+            var recipes = {};
+            recipes['recipes'] = [];
+            for (let index in response.body.hits) {
+                var recipe = response.body.hits[index].recipe;
+                var data = {
+                    label: recipe.label,
+                    image: recipe.image,
+                    url: recipe.url,
+                    ingredientLines: recipe.ingredientLines
+                }
+                recipes['recipes'].push(data);
+            }
+            res.json(recipes);
+        });
     });
 })
 
@@ -63,15 +74,17 @@ app.post('/addedFood', function (req, res) {
 
     console.log(req.body.foods);
     var food = req.body.foods;
+    var elements = ['apple', 'orange', 'banana', 'bread'];
     for (var i = 0; i < req.body.foods.length; i++) {
-        var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE)"
-            + "VALUES ('" + food[i] + "', DATE_ADD(NOW(), INTERVAL (SELECT AVG_DAYS"
-            + "FROM ConUHacks2019.EXP_DATES"
-            + "WHERE FOOD_TYPE ='" + food[i] + "') DAY))";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log(foods[i] + "record inserted");
-        });
+        if (elements.includes(food[i])) {
+            var sql = "INSERT INTO ConUHacks2019.MY_FOOD (FOOD_ITEM, EXP_DATE)"
+                + "VALUES ('" + food[i] + "', DATE_ADD(NOW(), INTERVAL (SELECT AVG_DAYS"
+                + " FROM ConUHacks2019.EXP_DATES"
+                + " WHERE FOOD_TYPE ='" + food[i] + "') DAY))";
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+            });
+        }
     }
 
     res.send("Post request complete!");

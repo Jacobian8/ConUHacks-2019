@@ -4,7 +4,7 @@ import numpy as np
 
 model_path = "cfg/yolo.cfg"
 weights_path = "bin/yolo.weights"
-webAddress = 'http://192.168.137.213:8000'
+webAddress = 'http://127.0.0.1:8000'
 cap = cv2.VideoCapture(0)
 options = {"model": model_path, "load": weights_path, "threshold": 0.5, "gpu": 1.0}
 tfnet = TFNet(options)
@@ -42,11 +42,11 @@ async def frameLoop():
         for obj in result:
             topleftTuple = obj.get("topleft")
             bottomrightTuple = obj.get("bottomright")
-            date = pytesseract.image_to_string(frame[topleftTuple.get("y"):bottomrightTuple.get("y"), topleftTuple.get("x"):bottomrightTuple.get("x")], config=config)
-            labels.append(obj.get("label")+"-"+date)
+            #date = pytesseract.image_to_string(frame[topleftTuple.get("y"):bottomrightTuple.get("y"), topleftTuple.get("x"):bottomrightTuple.get("x")], config=config)
+            labels.append(obj.get("label"))
             cv2.putText(frame, obj.get("label"), (topleftTuple.get("x"),topleftTuple.get("y")), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0))
             cv2.rectangle(frame, (topleftTuple.get("x"), topleftTuple.get("y")), (bottomrightTuple.get("x"), bottomrightTuple.get("y")), (0,255,0), 1)
-        cv2.imshow('Frame',cv2.resize(frame,None,fx=2,fy=2))
+        cv2.imshow('Frame',cv2.resize(frame,None,fx=1,fy=1))
         data = {'foods' : labels}
         print(data)
         r = requests.post(webAddress+"/addedFood", data = data)

@@ -5,11 +5,7 @@ export default class FoodItem extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      "FOOD_TYPE": "Banana",
-      "IMAGE_URL" : "https://img.freepik.com/free-vector/banana-fruit-fresh-realistic_7888-23.jpg?size=338&ext=jpg",
-      "QUANTITY" : 2,
-    };
+    this.state = this.props.food;
   }
 
   render() {

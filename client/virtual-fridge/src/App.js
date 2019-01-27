@@ -46,7 +46,7 @@ class App extends Component {
 
     const foodItems = this.state.foodItems.map((key) => {
       return(            
-        <FoodItem recipe={this.state.foodItems[key]}>
+        <FoodItem food={this.state.foodItems[key]}>
 
         </FoodItem>
       );

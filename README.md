@@ -1,4 +1,4 @@
-# ConUHacks-2019
+# ConUHacks 2019 - Sustainable IOT Fridge
 Fridge IoT: Food image recognition proving recipes for earliest ingredients about to expire.
 
 ![](fruit.PNG)

@@ -2,7 +2,7 @@
 Fridge IoT: Food image recognition proving recipes for earliest ingredients about to expire.
 
 ## Inspiration
-Canada's food problem is among the worst in the world."The average Canadian consumer throws out an estimated 170 kilograms of food a year," according to CBC Canada. (https://www.cbc.ca/radio/thecurrent/the-current-for-april-5-2018-1.4605392/how-bad-is-canada-s-food-waste-problem-among-the-world-s-worst-report-finds-1.4606012). We wanted to leverage IOT technologies and Machine Vision to assist Canadians reduce.
+Canada's food problem is among the worst in the world."The average Canadian consumer throws out an estimated 170 kilograms of food a year," according to CBC Canada. (https://www.cbc.ca/radio/thecurrent/the-current-for-april-5-2018-1.4605392/how-bad-is-canada-s-food-waste-problem-among-the-world-s-worst-report-finds-1.4606012) (https://globalnews.ca/news/4857582/canada-food-waste-study-2019/). We wanted to leverage IOT technologies and Machine Vision to assist Canadians reduce.
 
 ## What it does
 The goal is to help the user choose recipes that will use the food items that will be expire first.

@@ -1,6 +1,6 @@
 # ConUHacks-2019
 Fridge IoT: Food image recognition proving recipes for earliest ingredients about to expire.
-![](fruit.png)
+![](fruit.PNG)
 ![](demo.png)
 
 ## Inspiration
